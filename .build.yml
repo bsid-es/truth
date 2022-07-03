@@ -1,0 +1,24 @@
+image: alpine/edge
+arch: x86_64
+packages:
+  - go
+sources:
+  - git@git.sr.ht:~fmrsn/thetruth
+artifacts:
+  - coverage.html
+secrets:
+  - 270fb008-0636-482b-880e-d6c2472ada6c
+tasks:
+  - mirror: |
+      ssh-keyscan github.com >>$HOME/.ssh/known_hosts
+      cd thetruth
+      git push --mirror git@github.com:bsid-es/thetruth
+  - build: |
+      cd thetruth
+      go build -race -v ./...
+  - test: |
+      cd thetruth
+      go test -coverprofile=coverage.out -covermode=atomic ./...
+  - gen-coverage: |
+      cd thetruth
+      go tool cover -html=coverage.out -o ~/coverage.html
