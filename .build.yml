@@ -3,7 +3,7 @@ arch: x86_64
 packages:
   - go
 sources:
-  - git@git.sr.ht:~fmrsn/thetruth
+  - git@git.sr.ht:~fmrsn/truth
 artifacts:
   - coverage.html
 secrets:
@@ -11,14 +11,14 @@ secrets:
 tasks:
   - mirror: |
       ssh-keyscan github.com >>$HOME/.ssh/known_hosts
-      cd thetruth
-      git push --mirror git@github.com:bsid-es/thetruth
+      cd truth
+      git push --mirror git@github.com:bsid-es/truth
   - build: |
-      cd thetruth
+      cd truth
       go build -race -v ./...
   - test: |
-      cd thetruth
+      cd truth
       go test -coverprofile=coverage.out -covermode=atomic ./...
   - gen-coverage: |
-      cd thetruth
+      cd truth
       go tool cover -html=coverage.out -o ~/coverage.html

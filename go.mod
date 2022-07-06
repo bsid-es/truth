@@ -1,3 +1,3 @@
-module bsid.es/thetruth
+module bsid.es/truth
 
 go 1.18
